@@ -120,16 +120,26 @@ namespace ns{
 
             void insert(const T* pos, const T& value){
                 if (begin() <= pos && pos <= end()){
+                    
                     int index = pos - begin();
                     push_back(value);
+
                     for(int i = size() - 1; i > index; i--){
                         ns2::swap(data[i],data[i - 1]);
-                        /*Example:
-                            1 2 3
-                            1 2 3 0
-                            1 2 0 3
-                            1 0 2 3
-                            0 1 2 3 --> Complete.*/
+                        /* 
+
+                        data[3] = 0
+                        data[2] = 5
+                        
+                        data[2] = 0
+                        data[1] = 3 
+
+                        Example: 
+                            obj.insert(obj[1],0):
+                                1 3 5 0
+                                1 3 0 5
+                                1 0 3 5 --> Complete.
+                        */
                     }
                 }
                 else
@@ -173,7 +183,11 @@ int main(){
         obj.push_back(1);
         obj.push_back(3);
         obj.push_back(5);
-        obj.insert(&obj[1],2);
+
+        obj.insert(&obj[1],0);
+
+        cout << "size: " << obj.size() << endl;
+
         int *begin = obj.begin();
         int *end = obj.end();
 
