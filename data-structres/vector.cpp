@@ -59,7 +59,22 @@ namespace ns{
                 data = new T[cap];
             }
 
-            ~vector() { reset(); }
+            // Constructor Method
+            vector(int n, const T& t = T()) : vector<T>(){
+                for (int i=0; i<n; i++){
+                    push_back(t);
+                }
+            }
+
+            vector(const T* first, const T* last) : vector<T>(){
+                while(first != last){
+                    push_back(*first++);
+                }
+            }
+
+            vector(const vector<T>& rhs){
+                *this = rhs;
+            }
 
             int size()const{ return index; }
             int capacity()const{ return cap; }
@@ -128,20 +143,6 @@ namespace ns{
 
                     for(int i = size() - 1; i > index; i--){
                         ns2::swap(data[i],data[i - 1]);
-                        /* 
-
-                        data[3] = 0
-                        data[2] = 5
-                        
-                        data[2] = 0
-                        data[1] = 3 
-
-                        Example: 
-                            obj.insert(obj[1],0):
-                                1 3 5 0
-                                1 3 0 5
-                                1 0 3 5 --> Complete.
-                        */
                     }
                 }
                 else
@@ -188,30 +189,27 @@ namespace ns{
                     }
                 }
             }
+
+            vector<T>& assign(const vector<T>& rhs){
+                reset(rhs.size(),rhs.capacity());
+                data = new T[capacity()];
+                
+                for(int i = 0; i < size(); i++){
+                    data[i] = rhs.data[i];
+                }
+
+                return *this;
+            }
+
+            vector<T>& operator=( const vector<T>& rhs){
+                return assign(rhs);
+            }
     };   
 }
 
 int main(){
-    int * begin;
-    int * end;
 
-    {
-        ns::vector<int> obj;
-        obj.push_back(3);
-        obj.push_back(5);
-        obj.push_back(6);
-        obj.push_back(8);
-        obj.push_back(9);
-
-        begin = obj.begin();
-        end = obj.end();
-
-    }
-
-    while(begin != end){
-        cout << *begin << " ";
-        begin++;
-    }
+    cout << "vectors are finished." << endl;
 
     return 0;
 }
