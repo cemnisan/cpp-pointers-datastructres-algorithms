@@ -59,6 +59,8 @@ namespace ns{
                 data = new T[cap];
             }
 
+            ~vector() { reset(); }
+
             int size()const{ return index; }
             int capacity()const{ return cap; }
 
@@ -190,31 +192,25 @@ namespace ns{
 }
 
 int main(){
-    ns::vector<int> obj;
+    int * begin;
+    int * end;
 
-    try{
+    {
+        ns::vector<int> obj;
         obj.push_back(3);
         obj.push_back(5);
         obj.push_back(6);
         obj.push_back(8);
         obj.push_back(9);
 
-        obj.erase(obj.begin(),obj.end());
+        begin = obj.begin();
+        end = obj.end();
 
-        int * begin = obj.begin();
-        int * end = obj.end();
+    }
 
-        while(begin != end){
-            cout << *begin << " ";
-            begin++;
-        }
-
-        cout <<endl;
-        cout << "size: " << obj.size() << endl;
-        cout << "capacity: " << obj.capacity() << endl;
-        
-    }catch(const char* exception){
-        cout << exception;
+    while(begin != end){
+        cout << *begin << " ";
+        begin++;
     }
 
     return 0;
