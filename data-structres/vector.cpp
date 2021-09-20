@@ -160,6 +160,32 @@ namespace ns{
                     insert(begin() + index++, *first++);
                 }
             }
+
+            void erase(const T* pos){
+                if(begin() <= pos && pos <= end()){
+                    int index = pos - begin(); // pointer arithmetic
+
+                    for(int i = index ; i < size(); i++)
+                        data[i] = data[i + 1]; 
+                    pop_back();
+                }
+                else
+                    throw "Error : Vector erase";
+            }
+
+            void erase(const T* first, const T* last){
+                if(first == begin() && last == end()){
+                    clear();
+                }else{
+                    int f = first - begin();
+                    int l = last - begin();
+
+                    while (f != l ){
+                        erase(f + begin());
+                        l--;
+                    }
+                }
+            }
     };   
 }
 
@@ -167,21 +193,26 @@ int main(){
     ns::vector<int> obj;
 
     try{
-        obj.push_back(1);
         obj.push_back(3);
         obj.push_back(5);
+        obj.push_back(6);
+        obj.push_back(8);
+        obj.push_back(9);
 
-        int array[] = {1,43,234,532};
-        obj.insert(&obj[1],array, array+1);
+        obj.erase(obj.begin(),obj.end());
 
-        int *begin = obj.begin();
-        int *end = obj.end();
+        int * begin = obj.begin();
+        int * end = obj.end();
 
         while(begin != end){
             cout << *begin << " ";
             begin++;
         }
 
+        cout <<endl;
+        cout << "size: " << obj.size() << endl;
+        cout << "capacity: " << obj.capacity() << endl;
+        
     }catch(const char* exception){
         cout << exception;
     }
