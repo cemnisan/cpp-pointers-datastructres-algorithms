@@ -146,47 +146,33 @@ namespace ns{
                     throw "Error : Vector instert";
             }
 
+            void insert(const T* pos, int n, const T& value){
+                int index = pos - begin();
+                for (int i=0; i < n; i++){
+                    insert(begin() + index + i, value);
+                }
+            }
+
+            void insert(const T* pos, const T* first, const T* last){
+                int index = pos - begin();
+
+                while(first != last){
+                    insert(begin() + index++, *first++);
+                }
+            }
     };   
 }
 
 int main(){
     ns::vector<int> obj;
-    
+
     try{
-        /*obj.push_back(34);
-        obj.push_back(32);
-        obj.push_back(35);
-        obj.push_back(44);
-        obj.push_back(55);
-
-        cout << "size: " << obj.size() << endl;
-        cout << "capacity: " << obj.capacity() << endl;
-
-        int* begin = obj.begin();
-        int* end = obj.end();
-
-        cout << "begin : " << begin << endl;
-        cout << "end : " << end << endl;
-
-        while(begin != end){
-            cout << *begin << endl;
-            begin++;
-        }
-
-        cout << "1. indices: " << obj[1] << endl;
-
-        obj.clear();
-
-        cout << "size: " << obj.size() << endl;
-        cout << "capacity: " << obj.capacity() << endl;*/
-
         obj.push_back(1);
         obj.push_back(3);
         obj.push_back(5);
 
-        obj.insert(&obj[1],0);
-
-        cout << "size: " << obj.size() << endl;
+        int array[] = {1,43,234,532};
+        obj.insert(&obj[1],array, array+1);
 
         int *begin = obj.begin();
         int *end = obj.end();
@@ -196,10 +182,9 @@ int main(){
             begin++;
         }
 
-   
     }catch(const char* exception){
         cout << exception;
     }
-    
+
     return 0;
 }
