@@ -44,6 +44,25 @@ class list{
             root = tmp;
         }
 
+        int front()const{
+            if(isEmpty())
+                throw "Error: list::front() for list is empty";
+
+            return begin()->data;
+        }
+
+        int back()const{
+            if(isEmpty())
+                throw "Error: list::back() for list is empty";
+        
+            Node* tmp = begin();
+
+            while(tmp->next != end())
+                tmp = tmp->next;
+            
+            return tmp->data;
+        }
+
         void print(){
             Node* tmp = begin();
 
@@ -53,7 +72,6 @@ class list{
             }
             cout << endl;
         }
-
 };
 
 int main(){
@@ -61,10 +79,11 @@ int main(){
 
     l.push_back(5);
     l.push_back(10);
-    l.print();
 
     l.push_front(3);
-    l.print();
+    
+    cout << "Front: " <<l.front() << endl;
+    cout << "Back: " << l.back() << endl;
 
     return 0;
 }
