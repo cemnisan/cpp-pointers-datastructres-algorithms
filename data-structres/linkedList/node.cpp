@@ -38,6 +38,12 @@ class list{
             }
         }
 
+        void push_front(const int& value){
+            Node* tmp = new Node(value);
+            tmp-> next = root;
+            root = tmp;
+        }
+
         void print(){
             Node* tmp = begin();
 
@@ -47,15 +53,17 @@ class list{
             }
             cout << endl;
         }
+
 };
 
 int main(){
     list l;
 
-    l.push_back(6);
+    l.push_back(5);
     l.push_back(10);
-    l.push_back(12);
+    l.print();
 
+    l.push_front(3);
     l.print();
 
     return 0;
