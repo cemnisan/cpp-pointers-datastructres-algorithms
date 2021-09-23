@@ -27,7 +27,6 @@ class list{
         void push_back(const int& value){
             if(isEmpty()){
                 root = new Node(value);
-
             }
             else{
                 Node* tmp = begin();
@@ -36,20 +35,28 @@ class list{
                     tmp = tmp->next;
                 }
                 tmp->next = new Node(value);
-            
             }
+        }
+
+        void print(){
+            Node* tmp = begin();
+
+            while (tmp != end()){
+                cout << tmp -> data << " ";
+                tmp = tmp->next;
+            }
+            cout << endl;
         }
 };
 
 int main(){
-
     list l;
-    
-    cout << l.isEmpty() << endl;
 
     l.push_back(6);
-    cout << l.isEmpty() << endl;
+    l.push_back(10);
+    l.push_back(12);
 
+    l.print();
 
     return 0;
 }
