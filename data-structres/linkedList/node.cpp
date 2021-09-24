@@ -63,11 +63,38 @@ class list{
             return tmp->data;
         }
 
+        void pop_back(){
+            if(isEmpty())
+            {
+                throw "Error : list::pop_back() for list is empty.";
+            }
+
+            if (begin()->next == end())
+            {
+                delete root;
+                root = NULL;
+            }
+            else
+            {
+                Node* tmp = begin();
+                
+                while(tmp->next->next != end())
+                {
+                    tmp = tmp->next;
+                }
+    
+                delete tmp->next;
+                tmp->next = NULL;
+            }
+        
+        }
+
         void print(){
             Node* tmp = begin();
 
             while (tmp != end()){
-                cout << tmp -> data << " ";
+                cout << "data: " << tmp -> data << " ";
+                cout << "next: " <<  tmp-> next << " ";
                 tmp = tmp->next;
             }
             cout << endl;
@@ -82,6 +109,14 @@ int main(){
 
     l.push_front(3);
     
+    l.print();
+
+    cout << "Front: " <<l.front() << endl;
+    cout << "Back: " << l.back() << endl;
+
+    l.pop_back();
+
+    l.print();
     cout << "Front: " <<l.front() << endl;
     cout << "Back: " << l.back() << endl;
 
