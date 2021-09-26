@@ -40,7 +40,7 @@ class list{
 
         void push_front(const int& value){
             Node* tmp = new Node(value);
-            tmp-> next = root;
+            tmp->next = root;
             root = tmp;
         }
 
@@ -89,6 +89,16 @@ class list{
         
         }
 
+        void pop_front(){
+            if (isEmpty())
+            {
+                throw "Error : list::pop_back() for list is empty.";
+            }
+            Node* tmp = root;
+            root = tmp->next;
+            delete tmp;
+        }
+
         void print(){
             Node* tmp = begin();
 
@@ -114,7 +124,7 @@ int main(){
     cout << "Front: " <<l.front() << endl;
     cout << "Back: " << l.back() << endl;
 
-    l.pop_back();
+    l.pop_front();
 
     l.print();
     cout << "Front: " <<l.front() << endl;
