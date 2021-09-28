@@ -62,13 +62,8 @@ class list{
         int back()const{
             if(isEmpty())
                 throw "Error: list::back() for list is empty";
-        
-            Node* tmp = begin();
 
-            while(tmp->next != end())
-                tmp = tmp->next;
-            
-            return tmp->data;
+            return tail->data;
         }
 
         void pop_back(){
