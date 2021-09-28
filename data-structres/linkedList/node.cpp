@@ -11,13 +11,18 @@ class Node{
 
 // Constructor List
 class list{
+    Node* tail;
     Node* root;
     public:
-        list(): root(NULL){}
+        list(){
+            root = new Node();
+            tail = root;
+            tail->next = new Node();
+        }
 
-        Node* begin()const{ return root; }
+        Node* begin()const{ return root->next; }
 
-        Node* end()const{ return NULL; }
+        Node* end()const{ return tail->next; }
 
         // bool isEmpty()const{return root == NULL; } or
         bool isEmpty()const { 
@@ -25,23 +30,26 @@ class list{
         }
 
         void push_back(const int& value){
-            if(isEmpty()){
-                root = new Node(value);
-            }
-            else{
-                Node* tmp = begin();
-
-                while(tmp->next != end()){
-                    tmp = tmp->next;
-                }
-                tmp->next = new Node(value);
-            }
+           insert(end(),value);
         }
 
         void push_front(const int& value){
-            Node* tmp = new Node(value);
-            tmp->next = root;
-            root = tmp;
+            insert(begin(),value);
+        }
+
+        void insert(Node* pos, const int& value){
+            if(pos == end()){
+                tail->next = new Node (value,end());
+                tail = tail->next;
+
+            } else {
+                Node* tmp = root;
+                
+                while(tmp-> next != pos){
+                    tmp = tmp->next;
+                }
+                tmp->next = new Node(value,tmp->next);
+            }
         }
 
         int front()const{
@@ -113,22 +121,12 @@ class list{
 
 int main(){
     list l;
+    cout << l.isEmpty() << endl;
 
-    l.push_back(5);
-    l.push_back(10);
-
-    l.push_front(3);
-    
+    l.push_front(5);
+    l.push_back(2);
+    l.push_front(10);
     l.print();
-
-    cout << "Front: " <<l.front() << endl;
-    cout << "Back: " << l.back() << endl;
-
-    l.pop_front();
-
-    l.print();
-    cout << "Front: " <<l.front() << endl;
-    cout << "Back: " << l.back() << endl;
 
     return 0;
 }
