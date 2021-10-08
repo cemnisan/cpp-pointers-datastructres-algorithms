@@ -4,7 +4,7 @@ using namespace std;
 // Constructor Node
 class Node{
     public:
-        Node(const int& data = 0,Node* next=NULL): data(data), next(next) { }
+        Node(const int& data = 0, Node* next=NULL): data(data), next(next) { }
         int data;
         Node* next;
 };
@@ -66,6 +66,31 @@ class list{
             return tail->data;
         }
 
+        void erase(Node* pos){
+            if (isEmpty()){
+                throw "Error: list::erase() for list is empty.";
+            }
+
+            Node* tmp = root;
+            if (pos == end() || pos==tail){
+                pos = tail;
+
+                while(tmp->next != pos){
+                    tmp = tmp->next;
+                }            
+                tmp->next = pos->next;
+                tail = tmp;
+
+            }else{
+                while(tmp->next != pos){
+                    tmp = tmp->next;
+                }            
+                tmp->next = pos->next;
+            }
+            delete pos;
+
+        }
+
         void pop_back(){
             if(isEmpty())
             {
@@ -106,8 +131,7 @@ class list{
             Node* tmp = begin();
 
             while (tmp != end()){
-                cout << "data: " << tmp -> data << " ";
-                cout << "next: " <<  tmp-> next << " ";
+                cout << tmp -> data << " ";
                 tmp = tmp->next;
             }
             cout << endl;
@@ -121,6 +145,13 @@ int main(){
     l.push_front(5);
     l.push_back(2);
     l.push_front(10);
+
+    l.erase(l.begin());
+    l.erase(l.begin());
+    l.erase(l.begin());
+
+    l.isEmpty();
+
     l.print();
 
     return 0;
