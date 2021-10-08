@@ -13,6 +13,17 @@ class Node{
 class list{
     Node* tail;
     Node* root;
+    
+    Node* findPrev(Node* pos){
+        Node* tmp = root;
+        Node* stop = end();
+
+        while(tmp != stop && tmp->next != pos){
+            tmp = tmp->next;
+        }
+        return tmp;
+    }
+
     public:
         list(){
             root = new Node();
@@ -43,11 +54,10 @@ class list{
                 tail = tail->next;
 
             } else {
-                Node* tmp = root;
+                Node* tmp = findPrev(pos);
+                if (tmp == end())
+                    throw "Error: list::insert() for pos in not list.";
                 
-                while(tmp-> next != pos){
-                    tmp = tmp->next;
-                }
                 tmp->next = new Node(value,tmp->next);
             }
         }
@@ -73,58 +83,31 @@ class list{
 
             Node* tmp = root;
             if (pos == end() || pos==tail){
-                pos = tail;
 
-                while(tmp->next != pos){
-                    tmp = tmp->next;
-                }            
+                pos = tail;
+                tmp = findPrev(pos);   
+
                 tmp->next = pos->next;
                 tail = tmp;
 
             }else{
-                while(tmp->next != pos){
-                    tmp = tmp->next;
-                }            
+                tmp = findPrev(pos);
+
+                if (pos == end()){
+                    throw "Error: list::erase() for pos is not list.";
+                }        
                 tmp->next = pos->next;
             }
             delete pos;
-
         }
 
         void pop_back(){
-            if(isEmpty())
-            {
-                throw "Error : list::pop_back() for list is empty.";
-            }
-
-            if (begin()->next == end())
-            {
-                delete root;
-                root = NULL;
-            }
-            else
-            {
-                Node* tmp = begin();
-                
-                while(tmp->next->next != end())
-                {
-                    tmp = tmp->next;
-                }
-    
-                delete tmp->next;
-                tmp->next = NULL;
-            }
+            erase(end());
         
         }
 
         void pop_front(){
-            if (isEmpty())
-            {
-                throw "Error : list::pop_back() for list is empty.";
-            }
-            Node* tmp = root;
-            root = tmp->next;
-            delete tmp;
+           erase(begin());
         }
 
         void print(){
@@ -146,11 +129,9 @@ int main(){
     l.push_back(2);
     l.push_front(10);
 
+    l.insert(l.begin(),3);
     l.erase(l.begin());
-    l.erase(l.begin());
-    l.erase(l.begin());
-
-    l.isEmpty();
+    l.erase(l.end());
 
     l.print();
 
