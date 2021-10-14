@@ -146,6 +146,15 @@ public:
         erase(begin());
     }
 
+    Node* find(const int& value)const{
+        Node* tmp = begin();
+        Node* stop = end();
+        while(tmp != stop && tmp->data != value){
+            tmp = tmp->next;
+        }
+        return tmp;
+    }
+
     void print()
     {
         Node *tmp = begin();
@@ -164,7 +173,7 @@ int main()
     list l;
     cout << l.isEmpty() << endl;
     cout << "size: " << l.size() << endl;
-    
+
     l.push_front(5);
     l.push_back(2);
     l.push_front(10);
@@ -175,7 +184,9 @@ int main()
 
     l.print();
 
-    cout << "size: " << l.size() << endl;
+    Node* findNumber = l.find(10);
 
+    cout << "size: " << l.size() << endl;
+    cout << "find: " << findNumber->data << endl;
     return 0;
 }
