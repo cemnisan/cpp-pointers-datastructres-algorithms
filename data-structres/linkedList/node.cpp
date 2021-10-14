@@ -38,8 +38,33 @@ public:
         tail->next = new Node();
     }
 
-    Node *begin() const { return root->next; }
+    // Destructor
+    ~list()
+    {
+        clear();
+        delete tail->next;
+        delete tail;
+    }
 
+    list &operator=(const list &rhs)
+    {
+        return assign(rhs);
+    }
+
+    // Overload
+    list &assign(const list &rhs)
+    {
+        clear();
+        Node *tmp = rhs.begin();
+        while (tmp != rhs.end())
+        {
+            push_back(tmp->data);
+            tmp = tmp->next;
+        }
+        return *this;
+    }
+
+    Node *begin() const { return root->next; }
     Node *end() const { return tail->next; }
 
     // bool isEmpty()const{return root == NULL; } or
@@ -89,6 +114,25 @@ public:
         length++;
     }
 
+    // Overload
+    void insert(Node *pos, int n, const int &value)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            insert(pos, value);
+        }
+    }
+
+    //Overload
+    void insert(Node *pos, Node *first, Node *last)
+    {
+        while (first != last)
+        {
+            insert(pos, first->data);
+            first = first->next;
+        }
+    }
+
     int front() const
     {
         if (isEmpty())
@@ -136,6 +180,23 @@ public:
         length--;
     }
 
+    // Overload
+    void erase(Node *first, Node *last)
+    {
+        Node *tmp;
+        while (first != last)
+        {
+            tmp = first;
+            first = first->next;
+            erase(tmp);
+        }
+    }
+
+    void clear()
+    {
+        erase(begin(), end());
+    }
+
     void pop_back()
     {
         erase(end());
@@ -146,10 +207,12 @@ public:
         erase(begin());
     }
 
-    Node* find(const int& value)const{
-        Node* tmp = begin();
-        Node* stop = end();
-        while(tmp != stop && tmp->data != value){
+    Node *find(const int &value) const
+    {
+        Node *tmp = begin();
+        Node *stop = end();
+        while (tmp != stop && tmp->data != value)
+        {
             tmp = tmp->next;
         }
         return tmp;
@@ -170,23 +233,5 @@ public:
 
 int main()
 {
-    list l;
-    cout << l.isEmpty() << endl;
-    cout << "size: " << l.size() << endl;
-
-    l.push_front(5);
-    l.push_back(2);
-    l.push_front(10);
-
-    l.insert(l.begin(), 3);
-    l.erase(l.begin());
-    l.erase(l.end());
-
-    l.print();
-
-    Node* findNumber = l.find(10);
-
-    cout << "size: " << l.size() << endl;
-    cout << "find: " << findNumber->data << endl;
     return 0;
 }
