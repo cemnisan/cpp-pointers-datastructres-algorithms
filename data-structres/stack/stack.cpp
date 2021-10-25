@@ -11,10 +11,19 @@ public:
 
 class Stack
 {
+    // private
     StackNode *root;
+    int length;
+
+    void makeEmpty() {
+        while(!isEmpty()) {
+            pop();
+        }
+        root = NULL;
+    }
 
 public:
-    Stack() : root(NULL) {}
+    Stack() : root(NULL), length(0) {}
 
     StackNode *begin() const { return root; }
     StackNode *end() const { return NULL; }
@@ -25,10 +34,20 @@ public:
         return begin() == end();
     }
 
+    int top()const {
+        if (isEmpty()) {
+            throw "Error: stack::pop() for stack is empty.";
+        }
+
+        // return root->data;
+        return begin()->data;
+    }
+
     void push(const int &value)
     {
         StackNode *tmp = new StackNode(value, root);
         root = tmp;
+        length++;
     }
 
     void pop() {
@@ -39,6 +58,11 @@ public:
         StackNode* tmp = root;
         root = tmp->next;
         delete tmp;
+        length--;
+    }
+
+    int size() {
+        return length;
     }
 
     void print()
@@ -56,14 +80,23 @@ public:
 int main()
 {
     Stack s;
-    cout << s.isEmpty() << endl;
+
     s.push(6);
+    s.push(10);
+    s.push(32);
     s.push(1);
-    s.push(3);
-    s.push(5);
-    cout << s.isEmpty() << endl;
+    s.push(23932);
     s.pop();
-    s.print();
+    s.pop();
+    s.push(12);
+
+   try {
+        cout << "Başlangıç değeri: " << s.top() << endl;
+   } catch (const char* ex) {
+       cout << ex << endl;
+   }
+
+    cout << "size: " << s.size() << endl;
 
     return 0;
 }
