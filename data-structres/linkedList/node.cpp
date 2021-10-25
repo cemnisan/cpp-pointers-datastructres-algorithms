@@ -85,14 +85,6 @@ public:
 
     int size() const
     {
-        /*int counter = 0;
-        Node *tmp = begin();
-        while (tmp != end())
-        {
-            tmp = tmp->next;
-            counter++;
-        }
-        return counter;*/
         return length;
     }
 
@@ -233,5 +225,6 @@ public:
 
 int main()
 {
+
     return 0;
 }
